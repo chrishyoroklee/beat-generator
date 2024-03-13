@@ -82,12 +82,16 @@
             }
         });
 
-              // Event listener to handle device tilt
-              window.addEventListener('deviceorientation', (event) => {
-            // Adjust BPM based on device tilt
-            const bpm = 60 + (event.gamma / 90) * 60; // Adjust sensitivity if needed
-            Tone.Transport.bpm.value = bpm;
-        });
+        // Event listener to handle device orientation
+        function handleOrientation(event) {
+            const gamma = event.gamma || 0; // Check for gamma value
+            const permissionGranted = typeof gamma === "number"; // Permission granted if gamma value is available
+            if (!permissionGranted) {
+                alert("Please allow access to motion and orientation data for this website.");
+            }
+        }
+
+        window.addEventListener('deviceorientation', handleOrientation);
     </script>
 </body>
 </html>
