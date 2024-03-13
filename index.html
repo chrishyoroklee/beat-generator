@@ -88,10 +88,29 @@
             const permissionGranted = typeof gamma === "number"; // Permission granted if gamma value is available
             if (!permissionGranted) {
                 alert("Please allow access to motion and orientation data for this website.");
+                if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+                    DeviceOrientationEvent.requestPermission()
+                        .then(response => {
+                            if (response === 'granted') {
+                                window.addEventListener('deviceorientation', handleOrientation);
+                            }
+                        })
+                        .catch(console.error);
+                }
             }
         }
 
-        window.addEventListener('deviceorientation', handleOrientation);
+        if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+            DeviceOrientationEvent.requestPermission()
+                .then(response => {
+                    if (response === 'granted') {
+                        window.addEventListener('deviceorientation', handleOrientation);
+                    }
+                })
+                .catch(console.error);
+        } else {
+            window.addEventListener('deviceorientation', handleOrientation);
+        }
     </script>
 </body>
 </html>
