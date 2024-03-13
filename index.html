@@ -12,8 +12,8 @@
     <div>
         <div id="permsbutton" class="permsbutton" onclick="clicked()"><h1 class="init">initiate</h1></div>
     </div>
-    <button class="button button1" id="toggleButton1">Rhythm 1</button>
-    <button class="button button2" id="toggleButton2">Rhythm 2</button>
+    <button class="button button1" id="toggleButton1">rhythm 1</button>
+    <button class="button button2" id="toggleButton2">rhythm 2</button>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.26/Tone.js"></script>
     <script>
         let isPlaying1 = false;
@@ -127,10 +127,32 @@
                 // Set the new tempo
                 Tone.Transport.bpm.value = newTempo;
                 console.log("New Tempo:", newTempo);
+
+                // Call the update function to adjust other parameters
+                update(event);
             } else {
                 alert("Please allow access to motion and orientation data for this website.");
                 checkOrientationPermission(); // Check permission again if not granted
             }
+        }
+
+        // Function to update other parameters based on device orientation
+        function update(event) {
+            // You can adjust other parameters here based on the device orientation data
+            // For example, adjusting pitch, volume, etc.
+            // Example:
+            const xTilt = event.gamma || 0; // Get the gamma value for tilt angle
+
+            // Adjusting BPM based on x-axis tilt
+            const maxBPM = 240; // Maximum BPM value
+            const minBPM = 60; // Minimum BPM value
+            const tiltFactor = 10; // Tilt factor to adjust BPM sensitivity
+            let newBPM = initialTempo + xTilt * tiltFactor; // Calculate new BPM based on tilt
+            newBPM = Math.min(maxBPM, Math.max(minBPM, newBPM)); // Ensure BPM stays within the defined range
+
+            // Set the new BPM
+            Tone.Transport.bpm.value = newBPM;
+            console.log("New BPM:", newBPM);
         }
     </script>
 </body>
