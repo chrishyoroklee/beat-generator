@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beat Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button class="button button1" id="toggleButton1">Rhythm 1</button>
+    <button class="button button2" id="toggleButton2">Rhythm 2</button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.26/Tone.js"></script>
+    <script>
+        let isPlaying1 = false;
+        let isPlaying2 = false;
+
+        let transport1;
+        let transport2;
+
+        const snare1 = new Tone.NoiseSynth({
+            volume: 3,
+            envelope: {
+                attack: 0.001,
+                decay: 0.05,
+                sustain: 0.01,
+                release: 0.05
+            }
+        }).toDestination();
+
+        const snare2 = new Tone.NoiseSynth({
+            volume: 3,
+            envelope: {
+                attack: 0.001,
+                decay: 0.05,
+                sustain: 0.01,
+                release: 0.05
+            }
+        }).toDestination();
+
+        const toggleButton1 = document.getElementById("toggleButton1");
+        const toggleButton2 = document.getElementById("toggleButton2");
+
+        toggleButton1.addEventListener("click", async () => {
+            if (!isPlaying1) {
+                console.log("Starting Tone.js...");
+                await Tone.start();
+                console.log("Tone.js started.");
+                transport1 = Tone.Transport;
+                transport1.start();
+                transport1.scheduleRepeat((time) => {
+                    snare1.triggerAttackRelease("16n", time);
+                }, "4n");
+                isPlaying1 = true;
+                toggleButton1.textContent = "Stop Rhythm 1";
+            } else {
+                console.log("Stopping Transport 1...");
+                transport1.stop();
+                console.log("Transport 1 stopped.");
+                isPlaying1 = false;
+                toggleButton1.textContent = "Rhythm 1";
+            }
+        });
+
+        toggleButton2.addEventListener("click", async () => {
+            if (!isPlaying2) {
+                console.log("Starting Tone.js...");
+                await Tone.start();
+                console.log("Tone.js started.");
+                transport2 = Tone.Transport;
+                transport2.start();
+                transport2.scheduleRepeat((time) => {
+                    snare2.triggerAttackRelease("16n", time);
+                }, "8n");
+                isPlaying2 = true;
+                toggleButton2.textContent = "Stop Rhythm 2";
+            } else {
+                console.log("Stopping Transport 2...");
+                transport2.stop();
+                console.log("Transport 2 stopped.");
+                isPlaying2 = false;
+                toggleButton2.textContent = "Rhythm 2";
+            }
+        });
+
+              // Event listener to handle device tilt
+              window.addEventListener('deviceorientation', (event) => {
+            // Adjust BPM based on device tilt
+            const bpm = 60 + (event.gamma / 90) * 60; // Adjust sensitivity if needed
+            Tone.Transport.bpm.value = bpm;
+        });
+    </script>
+</body>
+</html>
