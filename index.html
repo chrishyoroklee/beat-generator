@@ -6,7 +6,12 @@
     <title>Beat Generator</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
+
 <body>
+    <div>
+        <div id="permsbutton" class="permsbutton" onclick="clicked()"><h1 class="init">initiate</h1></div>
+    </div>
     <button class="button button1" id="toggleButton1">Rhythm 1</button>
     <button class="button button2" id="toggleButton2">Rhythm 2</button>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.26/Tone.js"></script>
@@ -82,34 +87,36 @@
             }
         });
 
+        // Function to handle initiation
+        function clicked() {
+            const permsbutton = document.getElementById("permsbutton");
+            permsbutton.style.display = "none"; // Hide initiation button
+            checkOrientationPermission();
+        }
+
+        // Function to check and request permission for device orientation access
+        function checkOrientationPermission() {
+            if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+                DeviceOrientationEvent.requestPermission()
+                    .then(response => {
+                        if (response === 'granted') {
+                            window.addEventListener('deviceorientation', handleOrientation);
+                        }
+                    })
+                    .catch(console.error);
+            } else {
+                window.addEventListener('deviceorientation', handleOrientation);
+            }
+        }
+
         // Event listener to handle device orientation
         function handleOrientation(event) {
             const gamma = event.gamma || 0; // Check for gamma value
             const permissionGranted = typeof gamma === "number"; // Permission granted if gamma value is available
             if (!permissionGranted) {
                 alert("Please allow access to motion and orientation data for this website.");
-                if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-                    DeviceOrientationEvent.requestPermission()
-                        .then(response => {
-                            if (response === 'granted') {
-                                window.addEventListener('deviceorientation', handleOrientation);
-                            }
-                        })
-                        .catch(console.error);
-                }
+                checkOrientationPermission(); // Check permission again if not granted
             }
-        }
-
-        if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-            DeviceOrientationEvent.requestPermission()
-                .then(response => {
-                    if (response === 'granted') {
-                        window.addEventListener('deviceorientation', handleOrientation);
-                    }
-                })
-                .catch(console.error);
-        } else {
-            window.addEventListener('deviceorientation', handleOrientation);
         }
     </script>
 </body>

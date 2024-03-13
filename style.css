@@ -7,8 +7,32 @@ body {
     width: 100vw;
     margin: 0;
 }
-button{
 
+.permsbutton {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    color: aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.initiate-button {
+    width: 200px;
+    height: 50px;
+    background-color: #007bff;
+    color: rgb(255, 250, 250);
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+button {
     width: 500px;
     height: 500px;
     border: none;
@@ -18,17 +42,19 @@ button{
     margin: 5px;
     transition: background-color 0.3s ease;
 }
-.button1{
+
+.button1 {
     background-color: rgb(92, 223, 77);
     color: white;
 }
-.button2{
+
+.button2 {
     background-color: rgb(56, 64, 172);
     color: white;
 }
 
 @media screen and (max-width: 768px) {
-    .button {
+    button {
         width: 150px;
         height: 150px;
         font-size: 14px;
