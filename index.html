@@ -109,11 +109,25 @@
             }
         }
 
+        // Define variables to store the initial and maximum tempo values
+        let initialTempo = 120; // Initial tempo in BPM
+        let maxTempo = 240; // Maximum tempo in BPM
+
         // Event listener to handle device orientation
         function handleOrientation(event) {
             const gamma = event.gamma || 0; // Check for gamma value
             const permissionGranted = typeof gamma === "number"; // Permission granted if gamma value is available
-            if (!permissionGranted) {
+            if (permissionGranted) {
+                // Adjust the tempo based on the gamma value
+                const maxTilt = 50; // Maximum tilt angle to reach maximum tempo
+                const tiltRatio = gamma / maxTilt; // Calculate the ratio of current tilt to maximum tilt
+                let newTempo = initialTempo + (maxTempo - initialTempo) * tiltRatio; // Calculate the new tempo
+                newTempo = Math.min(maxTempo, Math.max(initialTempo, newTempo)); // Ensure the tempo stays within the defined range
+
+                // Set the new tempo
+                Tone.Transport.bpm.value = newTempo;
+                console.log("New Tempo:", newTempo);
+            } else {
                 alert("Please allow access to motion and orientation data for this website.");
                 checkOrientationPermission(); // Check permission again if not granted
             }
