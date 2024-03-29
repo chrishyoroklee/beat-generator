@@ -72,7 +72,7 @@
         const toggleButton2 = document.getElementById("toggleButton2");
         const toggleButton3 = document.getElementById("toggleButton3");
 
-        toggleButton1.addEventListener("mousedown", async () => {
+        toggleButton1.addEventListener("touchstart", async () => {
             if (!isPlaying1) {
                 console.log("Starting Tone.js...");
                 await Tone.start();
@@ -87,7 +87,7 @@
             } 
         });
 
-        toggleButton1.addEventListener("mouseup", () => {
+        toggleButton1.addEventListener("touchend", () => {
             console.log("Stopping Transport 1...");
             transport1.stop();
             console.log("Transport 1 stopped.");
@@ -95,7 +95,7 @@
             toggleButton1.textContent = "Rhythm 1";
         });
 
-        toggleButton2.addEventListener("mousedown", async () => {
+        toggleButton2.addEventListener("touchstart", async () => {
             if (!isPlaying2) {
                 console.log("Starting Tone.js...");
                 await Tone.start();
@@ -110,7 +110,7 @@
             } 
         });   
 
-        toggleButton2.addEventListener("mouseup", () => {
+        toggleButton2.addEventListener("touchend", () => {
                 console.log("Stopping Transport 2...");
                 transport2.stop();
                 console.log("Transport 2 stopped.");
@@ -119,7 +119,7 @@
             
         });
 
-        toggleButton3.addEventListener("mousedown", async () => {
+        toggleButton3.addEventListener("touchstart", async () => {
             if (!isPlaying3) {
                 console.log("Starting Tone.js...");
                 await Tone.start();
@@ -127,13 +127,13 @@
                 transport3 = Tone.Transport;
                 transport3.start();
                 transport3.scheduleRepeat((time) => {
-                    snare3.triggerAttackRelease("16n", time);
-                }, "8n");
+                    playSynth(snare3, notes.snare3);
+                }, "16n");
                 isPlaying3 = true;
                 toggleButton3.textContent = "Stop Rhythm 3";
             } 
         });    
-        toggleButton3.addEventListener("mouseup", () => {
+        toggleButton3.addEventListener("touchend", () => {
                 console.log("Stopping Transport 3...");
                 transport3.stop();
                 console.log("Transport 3 stopped.");
