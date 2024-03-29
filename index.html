@@ -14,13 +14,16 @@
     </div>
     <button class="button button1" id="toggleButton1">rhythm 1</button>
     <button class="button button2" id="toggleButton2">rhythm 2</button>
+    <button class="button button3" id="toggleButton3">rhythm 3</button>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.26/Tone.js"></script>
     <script>
         let isPlaying1 = false;
         let isPlaying2 = false;
+        let isPlaying3 = false;
 
         let transport1;
         let transport2;
+        let transport3;
 
         const snare1 = new Tone.NoiseSynth({
             volume: 3,
@@ -42,10 +45,21 @@
             }
         }).toDestination();
 
+        const snare3 = new Tone.NoiseSynth({
+            volume: 3,
+            envelope: {
+                attack: 0.001,
+                decay: 0.05,
+                sustain: 0.01,
+                release: 0.05
+            }
+        }).toDestination();
+
         const toggleButton1 = document.getElementById("toggleButton1");
         const toggleButton2 = document.getElementById("toggleButton2");
+        const toggleButton3 = document.getElementById("toggleButton3");
 
-        toggleButton1.addEventListener("click", async () => {
+        toggleButton1.addEventListener("mousedown", async () => {
             if (!isPlaying1) {
                 console.log("Starting Tone.js...");
                 await Tone.start();
@@ -57,16 +71,18 @@
                 }, "4n");
                 isPlaying1 = true;
                 toggleButton1.textContent = "Stop Rhythm 1";
-            } else {
-                console.log("Stopping Transport 1...");
-                transport1.stop();
-                console.log("Transport 1 stopped.");
-                isPlaying1 = false;
-                toggleButton1.textContent = "Rhythm 1";
-            }
+            } 
         });
 
-        toggleButton2.addEventListener("click", async () => {
+        toggleButton1.addEventListener("mouseup", () => {
+            console.log("Stopping Transport 1...");
+            transport1.stop();
+            console.log("Transport 1 stopped.");
+            isPlaying1 = false;
+            toggleButton1.textContent = "Rhythm 1";
+        });
+
+        toggleButton2.addEventListener("mousedown", async () => {
             if (!isPlaying2) {
                 console.log("Starting Tone.js...");
                 await Tone.start();
@@ -78,13 +94,39 @@
                 }, "8n");
                 isPlaying2 = true;
                 toggleButton2.textContent = "Stop Rhythm 2";
-            } else {
+            } 
+        });   
+
+        toggleButton2.addEventListener("mouseup", () => {
                 console.log("Stopping Transport 2...");
                 transport2.stop();
                 console.log("Transport 2 stopped.");
                 isPlaying2 = false;
                 toggleButton2.textContent = "Rhythm 2";
-            }
+            
+        });
+
+        toggleButton3.addEventListener("mousedown", async () => {
+            if (!isPlaying3) {
+                console.log("Starting Tone.js...");
+                await Tone.start();
+                console.log("Tone.js started.");
+                transport3 = Tone.Transport;
+                transport3.start();
+                transport3.scheduleRepeat((time) => {
+                    snare3.triggerAttackRelease("16n", time);
+                }, "8n");
+                isPlaying3 = true;
+                toggleButton3.textContent = "Stop Rhythm 3";
+            } 
+        });    
+        toggleButton3.addEventListener("mouseup", () => {
+                console.log("Stopping Transport 3...");
+                transport3.stop();
+                console.log("Transport 3 stopped.");
+                isPlaying3 = false;
+                toggleButton3.textContent = "Rhythm 3";
+            
         });
 
         // Function to handle initiation
@@ -119,7 +161,7 @@
             const permissionGranted = typeof gamma === "number"; // Permission granted if gamma value is available
             if (permissionGranted) {
                 // Adjust the tempo based on the gamma value
-                const maxTilt = 50; // Maximum tilt angle to reach maximum tempo
+                const maxTilt = 100; // Maximum tilt angle to reach maximum tempo
                 const tiltRatio = gamma / maxTilt; // Calculate the ratio of current tilt to maximum tilt
                 let newTempo = initialTempo + (maxTempo - initialTempo) * tiltRatio; // Calculate the new tempo
                 newTempo = Math.min(maxTempo, Math.max(initialTempo, newTempo)); // Ensure the tempo stays within the defined range
