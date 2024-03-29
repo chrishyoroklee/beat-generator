@@ -12,9 +12,9 @@
     <div>
         <div id="permsbutton" class="permsbutton" onclick="clicked()"><h1 class="init">initiate</h1></div>
     </div>
-    <button class="button button1" id="toggleButton1">rhythm 1</button>
-    <button class="button button2" id="toggleButton2">rhythm 2</button>
-    <button class="button button3" id="toggleButton3">rhythm 3</button>
+    <button class="button button1" id="toggleButton1">1</button>
+    <button class="button button2" id="toggleButton2">2</button>
+    <button class="button button3" id="toggleButton3">3</button>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.26/Tone.js"></script>
     <script>
         let isPlaying1 = false;
@@ -64,8 +64,8 @@
             snare3: "B2"
         };
 
-        function playSynth(synth, note){
-            synth.triggerAttackRelease(note, "8n");
+        function playSynth(synth, note, duration){
+            synth.triggerAttackRelease(note, duration);
         }
 
         const toggleButton1 = document.getElementById("toggleButton1");
@@ -80,7 +80,7 @@
                 transport1 = Tone.Transport;
                 transport1.start();
                 transport1.scheduleRepeat((time) => {
-                    playSynth(snare1, notes.snare1);
+                    playSynth(snare1, "C3", "8n");
                 }, "4n");
                 isPlaying1 = true;
                 toggleButton1.textContent = "Stop Rhythm 1";
@@ -103,7 +103,7 @@
                 transport2 = Tone.Transport;
                 transport2.start();
                 transport2.scheduleRepeat((time) => {
-                    playSynth(snare2, notes.snare2);
+                    playSynth(snare2, "Eb3", "8n");
                 }, "8n");
                 isPlaying2 = true;
                 toggleButton2.textContent = "Stop Rhythm 2";
@@ -127,8 +127,8 @@
                 transport3 = Tone.Transport;
                 transport3.start();
                 transport3.scheduleRepeat((time) => {
-                    playSynth(snare3, notes.snare3);
-                }, "16n");
+                    playSynth(snare3, "G2", "16n");
+                }, "4n");
                 isPlaying3 = true;
                 toggleButton3.textContent = "Stop Rhythm 3";
             } 
