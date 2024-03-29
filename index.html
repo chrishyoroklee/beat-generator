@@ -25,7 +25,10 @@
         let transport2;
         let transport3;
 
-        const snare1 = new Tone.NoiseSynth({
+        const snare1 = new Tone.Synth({
+            oscillartor: {
+                type: "sine"
+            },
             volume: 3,
             envelope: {
                 attack: 0.001,
@@ -35,7 +38,7 @@
             }
         }).toDestination();
 
-        const snare2 = new Tone.NoiseSynth({
+        const snare2 = new Tone.AMSynth({
             volume: 3,
             envelope: {
                 attack: 0.001,
@@ -45,7 +48,7 @@
             }
         }).toDestination();
 
-        const snare3 = new Tone.NoiseSynth({
+        const snare3 = new Tone.DuoSynth({
             volume: 3,
             envelope: {
                 attack: 0.001,
@@ -54,6 +57,16 @@
                 release: 0.05
             }
         }).toDestination();
+
+        const notes = {
+            snare1: "C3",
+            snare2: "E2",
+            snare3: "B2"
+        };
+
+        function playSynth(synth, note){
+            synth.triggerAttackRelease(note, "8n");
+        }
 
         const toggleButton1 = document.getElementById("toggleButton1");
         const toggleButton2 = document.getElementById("toggleButton2");
@@ -67,7 +80,7 @@
                 transport1 = Tone.Transport;
                 transport1.start();
                 transport1.scheduleRepeat((time) => {
-                    snare1.triggerAttackRelease("16n", time);
+                    playSynth(snare1, notes.snare1);
                 }, "4n");
                 isPlaying1 = true;
                 toggleButton1.textContent = "Stop Rhythm 1";
@@ -90,7 +103,7 @@
                 transport2 = Tone.Transport;
                 transport2.start();
                 transport2.scheduleRepeat((time) => {
-                    snare2.triggerAttackRelease("16n", time);
+                    playSynth(snare2, notes.snare2);
                 }, "8n");
                 isPlaying2 = true;
                 toggleButton2.textContent = "Stop Rhythm 2";
