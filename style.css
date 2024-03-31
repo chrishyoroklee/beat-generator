@@ -58,7 +58,7 @@ button {
 }
 
 .button3 {
-    background-color: rgb(10, 14, 73);
+    background-color: rgb(114, 15, 175);
     color: white;
     font-family: sans-serif;
     font-size: 24px;
@@ -70,4 +70,14 @@ button {
         height: 150px;
         font-size: 14px;
     }
+}
+
+#tempoIndicator {
+    position: absolute;
+    bottom: 10px; /* Adjust as needed */
+    width: 20px; /* Width of the indicator */
+    height: 20px; /* Height of the indicator */
+    background-color: red; /* Color of the indicator */
+    border-radius: 50%; /* Make it round */
+    transition: left 0.1s ease; /* Smooth transition */
 }

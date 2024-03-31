@@ -15,6 +15,7 @@
     <button class="button button1" id="toggleButton1">1</button>
     <button class="button button2" id="toggleButton2">2</button>
     <button class="button button3" id="toggleButton3">3</button>
+    <div id="tempoIndicator"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.26/Tone.js"></script>
     <script>
         let isPlaying1 = false;
@@ -26,7 +27,7 @@
         let transport3;
 
         const snare1 = new Tone.Synth({
-            oscillartor: {
+            oscillator: {
                 type: "sine"
             },
             volume: 3,
@@ -57,12 +58,6 @@
                 release: 0.05
             }
         }).toDestination();
-
-        const notes = {
-            snare1: "C3",
-            snare2: "E2",
-            snare3: "B2"
-        };
 
         function playSynth(synth, note, duration){
             synth.triggerAttackRelease(note, duration);
@@ -189,6 +184,13 @@
                 alert("Please allow access to motion and orientation data for this website.");
                 checkOrientationPermission(); // Check permission again if not granted
             }
+             // Calculate the position of the tempo indicator based on the tempo
+                const maxLeft = window.innerWidth - document.getElementById("tempoIndicator").offsetWidth; // Maximum left position
+                const tempoRatio = (Tone.Transport.bpm.value - initialTempo) / (maxTempo - initialTempo); // Calculate ratio of current tempo within range
+                const newPos = tempoRatio * maxLeft; // Calculate new left position
+                
+                // Set the left position of the tempo indicator
+                document.getElementById("tempoIndicator").style.left = newPos + "px";
         }
 
         // Function to update other parameters based on device orientation
