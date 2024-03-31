@@ -78,7 +78,7 @@
                     playSynth(snare1, "C3", "8n");
                 }, "4n");
                 isPlaying1 = true;
-                toggleButton1.textContent = "Stop Rhythm 1";
+                // toggleButton1.textContent = "Stop Rhythm 1";
             } 
         });
 
@@ -87,7 +87,7 @@
             transport1.stop();
             console.log("Transport 1 stopped.");
             isPlaying1 = false;
-            toggleButton1.textContent = "Rhythm 1";
+            // toggleButton1.textContent = "Rhythm 1";
         });
 
         toggleButton2.addEventListener("touchstart", async () => {
@@ -101,7 +101,7 @@
                     playSynth(snare2, "Eb3", "8n");
                 }, "8n");
                 isPlaying2 = true;
-                toggleButton2.textContent = "Stop Rhythm 2";
+                // toggleButton2.textContent = "Stop Rhythm 2";
             } 
         });   
 
@@ -110,7 +110,7 @@
                 transport2.stop();
                 console.log("Transport 2 stopped.");
                 isPlaying2 = false;
-                toggleButton2.textContent = "Rhythm 2";
+                // toggleButton2.textContent = "Rhythm 2";
             
         });
 
@@ -125,7 +125,7 @@
                     playSynth(snare3, "G2", "8n");
                 }, "4n");
                 isPlaying3 = true;
-                toggleButton3.textContent = "Stop Rhythm 3";
+                // toggleButton3.textContent = "Stop Rhythm 3";
             } 
         });    
         toggleButton3.addEventListener("touchend", () => {
@@ -133,7 +133,7 @@
                 transport3.stop();
                 console.log("Transport 3 stopped.");
                 isPlaying3 = false;
-                toggleButton3.textContent = "Rhythm 3";
+                // toggleButton3.textContent = "Rhythm 3";
             
         });
 
