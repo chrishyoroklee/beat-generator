@@ -73,6 +73,7 @@
                 await Tone.start();
                 console.log("Tone.js started.");
                 transport1 = Tone.Transport;
+                //Checking for errors
                 transport1.start();
                 transport1.scheduleRepeat((time) => {
                     playSynth(snare1, "C3", "8n");
